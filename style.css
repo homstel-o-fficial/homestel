@@ -1,0 +1,524 @@
+/* =========================
+   THEME VARIABLES
+   ========================= */
+
+/* Light mode (default) */
+:root {
+  --bg-1: #ffffff;
+  --bg-2: #f9fafc;
+  --muted: #222222;
+  --accent: #0077ff;
+  --accent-2: #00c4ff;
+  --frame: rgba(0,0,0,0.05);
+  --glass: rgba(255,255,255,0.8);
+  --card: rgba(255,255,255,0.9);
+}
+
+/* Dark mode */
+body.dark {
+  --bg-1: #071727;    /* deep navy */
+  --bg-2: #0e3340;    /* tealish */
+  --muted: #cfd8dc;   /* soft silver */
+  --accent: #26c6da;  /* teal highlight */
+  --accent-2: #8be9dd;/* lighter accent */
+  --frame: rgba(255,255,255,0.04);
+  --glass: rgba(255,255,255,0.05);
+  --card: rgba(255,255,255,0.03);
+}
+
+/* =========================
+   BASE STYLES
+   ========================= */
+* { box-sizing: border-box }
+html, body { height: 100% }
+
+body {
+  margin: 0;
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+  color: var(--muted);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  scroll-behavior: smooth;
+}
+
+/* Page Loader */
+#page-loader {
+  position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 18px; background: var(--bg-1); z-index: 9999; color: var(--accent);
+}
+.loader-logo {
+  font-weight: 800; font-size: 28px; letter-spacing: 3px;
+  text-shadow: 0 0 18px rgba(38,198,218,0.25);
+}
+.loader-dot-wrap .dot {
+  display: inline-block; width: 10px; height: 10px; margin: 0 6px; border-radius: 50%;
+  background: var(--accent); opacity: .9; animation: loader-bounce 1s infinite;
+}
+.loader-dot-wrap .dot:nth-child(2) { animation-delay: .15s }
+.loader-dot-wrap .dot:nth-child(3) { animation-delay: .3s }
+@keyframes loader-bounce { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-10px) } }
+
+/* Theme toggle */
+#theme-toggle {
+  position: fixed; right: 18px; top: 18px; z-index: 1500; background: var(--glass); border: none;
+  color: var(--accent); padding: 10px; border-radius: 10px; cursor: pointer; backdrop-filter: blur(6px);
+  font-size: 20px;
+}
+
+/* Navbar */
+.navbar {
+  position: sticky; top: 0; z-index: 1200;
+  background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.25));
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  padding: 12px 28px;
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto }
+.logo {
+  font-weight: 800; color: var(--accent); font-size: 22px; text-decoration: none;
+  letter-spacing: 2px; padding: 6px; border-radius: 6px;
+}
+.logo:focus { outline: 3px solid rgba(38,198,218,0.12) }
+.nav-links { list-style: none; display: flex; gap: 18px; margin: 0; padding: 0; align-items: center }
+.nav-links a {
+  color: var(--muted); text-decoration: none; padding: 6px 8px; border-radius: 6px; position: relative;
+  transition: color .25s ease;
+  font-weight: 600; font-size: 15px;
+}
+.nav-links a::after {
+  content: ""; position: absolute; left: 6px; right: 6px; height: 2px; bottom: -6px; background: transparent; transition: all .25s;
+  border-radius: 3px;
+}
+.nav-links a:hover { color: var(--accent-2) }
+.nav-links a:hover::after { background: linear-gradient(90deg,var(--accent),var(--accent-2)); }
+
+/* Hero */
+.hero { min-height: 72vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden }
+.hero-bg {
+  position: absolute; inset: 0; background-image: url("https://images.unsplash.com/photo-1502904550040-7534597429af?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=0b0b0f9d8fc1b3e5d9b7a7bd02f4f7a5");
+  background-size: cover; background-position: center; filter: contrast(.85) saturate(.9); transform: translateZ(0);
+  will-change: transform; opacity: .65; background-attachment: fixed;
+}
+.hero-content { position: relative; z-index: 2; max-width: 1100px; padding: 56px; border-radius: 12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); backdrop-filter: blur(6px) }
+.hero-title { font-size: 40px; margin: 0; color: var(--accent); letter-spacing: 1px; text-shadow: 0 6px 30px rgba(2,8,12,0.5) }
+.brand { color: rgba(255,255,255,0.95); background: linear-gradient(90deg,var(--accent-2),rgba(255,255,255,0.9)); padding: 4px 8px; border-radius: 6px }
+.hero-sub { margin: 12px 0 18px; color: var(--muted); font-size: 17px; max-width: 820px }
+.hero-highlights { display: flex; gap: 12px; flex-wrap: wrap; list-style: none; padding: 0; margin: 12px 0 20px; color: var(--muted) }
+.hero-highlights li { background: var(--card); padding: 8px 10px; border-radius: 10px; font-weight: 600; color: var(--muted) }
+
+/* Buttons */
+.btn { display: inline-block; padding: 12px 18px; border-radius: 10px; background: linear-gradient(90deg,var(--accent),var(--accent-2)); color: #021517; text-decoration: none; font-weight: 700; box-shadow: 0 8px 30px rgba(38,198,218,0.08); transition: transform .18s ease }
+.btn:hover { transform: translateY(-4px) }
+.btn.ghost { background: transparent; border: 1px solid rgba(255,255,255,0.06); color: var(--muted) }
+
+/* Section common */
+.section { padding: 56px 20px }
+.frame { max-width: 1200px; margin: 0 auto; padding: 36px; background: var(--frame); border-radius: 12px; border: 1px solid rgba(255,255,255,0.03) }
+.section h2 { color: var(--accent); font-size: 22px; margin: 8px 0 16px }
+.lead { color: var(--muted); font-size: 16px; max-width: 900px; margin: 0 auto; line-height: 1.8 }
+
+/* Why grid */
+.why-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 18px; margin-top: 18px }
+.why-card { background: var(--card); padding: 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.03); transition: transform .35s cubic-bezier(.2,.9,.3,1),box-shadow .35s; box-shadow: 0 6px 24px rgba(2,8,12,0.35) }
+.why-card h3 { margin: 0 0 8px; color: var(--accent-2) }
+.why-card p { color: var(--muted); font-size: 14px }
+.why-card:focus { outline: 3px solid rgba(38,198,218,0.08); transform: translateY(-8px) }
+
+/* tilt effect */
+.tilt { transform-origin: center; transition: transform .25s ease; will-change: transform }
+.tilt:hover { transform: rotateX(4deg) rotateY(-6deg) translateY(-6px) }
+
+/* Facilities grid */
+.facility-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 16px; margin-top: 18px }
+.facility-card { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding: 18px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.03); transition: transform .28s,box-shadow .28s }
+.facility-card:hover { transform: translateY(-8px); box-shadow: 0 18px 40px rgba(2,8,12,0.45) }
+.facility-card h4 { margin: 0 0 8px; color: var(--accent) }
+.facility-card p { color: var(--muted); font-size: 14px }
+
+/* Gallery */
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 12px; margin-top: 12px }
+.gallery-item { position: relative; border-radius: 10px; overflow: hidden; cursor: zoom-in }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.9,.3,1) }
+.gallery-item:hover img { transform: scale(1.08) }
+.gallery-item figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 10px; background: linear-gradient(180deg,transparent,rgba(0,0,0,0.6)); color: var(--accent-2); font-weight: 700 }
+
+/* Testimonials */
+.testimonials-wrap { display: flex; align-items: center; gap: 12px; justify-content: center; margin-top: 10px }
+.testimonial-text { max-width: 900px; font-size: 18px; padding: 20px; border-radius: 10px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.03); color: var(--muted); min-height: 72px; display: flex; align-items: center; justify-content: center; text-align: center; transition: transform .28s,box-shadow .28s }
+.testimonial-controls button { background: transparent; border: 1px solid rgba(255,255,255,0.06); color: var(--muted); padding: 8px; border-radius: 8px; cursor: pointer }
+.testimonial-controls button:hover { border-color: var(--accent); color: var(--accent) }
+
+/* FAQ accordion */
+.faq-acc details { background: var(--card); padding: 14px; border-radius: 8px; margin: 10px 0; border: 1px solid rgba(255,255,255,0.03) }
+.faq-acc summary { cursor: pointer; font-weight: 700; color: var(--accent) }
+.faq-acc p { margin: 8px 0 0; color: var(--muted) }
+
+/* Contact grid */
+.contact-grid { display: grid; grid-template-columns: 1fr 360px; gap: 18px; align-items: start }
+.contact-form input,.contact-form textarea { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.04); background: transparent; color: var(--muted) }
+.contact-actions { display: flex; gap: 10px; margin-top: 8px }
+.contact-info p { margin: 8px 0; color: var(--muted) }
+.map-wrap { margin-top: 12px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.03) }
+.map-wrap iframe { width: 100%; height: 200px; border: 0 }
+
+/* Chat widget */
+#chat-widget { position: fixed; right: 18px; bottom: 18px; z-index: 1400 }
+#chat-toggle { background: linear-gradient(90deg,var(--accent),var(--accent-2)); border: none; padding: 12px; border-radius: 999px; cursor: pointer; box-shadow: 0 12px 30px rgba(38,198,218,0.12); font-size: 35px; line-height: 1 }
+#chat-panel { display: none; position: fixed; right: 18px; bottom: 76px; width: 320px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); backdrop-filter: blur(8px); border-radius: 10px; border: 1px solid rgba(255,255,255,0.03); overflow: hidden; box-shadow: 0 20px 60px rgba(2,8,12,0.6) }
+#chat-panel header { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.02) }
+#chat-body { max-height: 260px; overflow: auto; padding: 12px; display: flex; flex-direction: column; gap: 8px }
+#chat-body .bot { background: rgba(255,255,255,0.02); padding: 10px; border-radius: 8px; color: var(--muted) }
+#chat-form { display: flex; border-top: 1px solid rgba(255,255,255,0.02) }
+#chat-form input { flex: 1; border: none; padding: 10px; background: transparent; color: var(--muted) }
+#chat-form button { background: var(--accent); color: #041212; border: none; padding: 10px }
+
+/* Footer */
+.footer { margin-top: 36px; padding: 20px 0; background: linear-gradient(180deg,transparent,rgba(0,0,0,0.35)) }
+.footer-inner { display: flex; gap: 20px; justify-content: space-between; align-items: flex-start; max-width: 1200px; margin: 0 auto }
+.footer-col { min-width: 140px }
+.footer-col a { display: block; color: var(--muted); text-decoration: none; margin: 6px 0 }
+.legal { text-align: center; margin-top: 10px; color: rgba(255,255,255,0.45) }
+
+/* small screens */
+@media (max-width:900px){
+  .contact-grid { grid-template-columns: 1fr }
+  .nav-links { display: none }
+  .hero-title { font-size: 28px }
+  .hero-content { padding: 24px }
+  .footer-inner { flex-direction: column; gap: 10px }
+  .why-grid { grid-template-columns: repeat(1,1fr) }
+}
+
+/* accessibility helper */
+.visually-hidden { position: absolute!important; height: 1px; width: 1px; overflow: hidden; clip: rect(1px,1px,1px,1px); white-space: nowrap }
+/*Hover speed fast*/
+.why-card, .facility-card, .gallery-item img, .testimonial-text {
+  transition: transform .2s ease, box-shadow .2s;
+}
+.gallery-item img {
+  transition: transform .3s cubic-bezier(.2,.9,.3,1);
+}
+
+/* Chat logo size */
+#chat-toggle {
+  font-size: 50px;
+  padding: 18px;
+}
+/* Sticky sections */
+.sticky-section {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 60px; /* navbar height */
+  z-index: 100;
+}
+
+/* Error message */
+.error-message {
+  color: red;
+  font-size: 13px;
+  display: block;
+  margin-top: 4px;
+}
+/* Fix navbar on top */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background: var(--bg, #fff); /* use your theme color */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* add padding so content is not hidden under navbar */
+body {
+  padding-top: 70px; /* adjust according to navbar height */
+}
+
+/* "Hey Girls" subtitle style*/
+.hero-subtitle {
+  font-size: 1.8rem;
+  color: #e63946;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Navbar links ko dark theme me black + bold karne ke liye */
+body.dark .nav-links a {
+  color: #000000 !important;
+  font-weight: 700;
+}
+/* Theme toggle compact stylish box */
+#theme-toggle {
+  position: fixed;
+  right: 18px;
+  top: 14px;
+  z-index: 1500;
+  background: var(--card);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px; /* rounded square */
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  font-size: 18px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.25s ease;
+}
+
+/* Hover effect */
+#theme-toggle:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: scale(1.05);
+}
+/* Light mode polish */
+body:not(.dark) .frame {
+  background: linear-gradient(180deg, #ffffff, #f6f9fc);
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+body:not(.dark) .hero-content {
+  background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(250,250,255,0.85));
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+body:not(.dark) .hero-title {
+  color: #0077ff;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+body:not(.dark) .brand {
+  background: linear-gradient(90deg, #00c4ff, #0077ff);
+  color: #fff;
+}
+
+body:not(.dark) .why-card,
+body:not(.dark) .facility-card,
+body:not(.dark) .testimonial-text {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+/* Light mode gradient background */
+body:not(.dark) {
+  background: linear-gradient(180deg, #fdfbfb, #ebedee);
+}
+
+/* Hero background light mode */
+body:not(.dark) .hero-bg {
+  background-image: linear-gradient(135deg, #dff6ff, #fef9ff);
+  opacity: 0.9;
+}
+/* Navbar links in premium box style */
+.nav-links a {
+  background: rgba(255, 255, 255, 0.05);   /* glassy look for dark */
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--muted);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Light mode specific */
+body:not(.dark) .nav-links a {
+  background: rgba(0, 0, 0, 0.05);   /* subtle grey glass */
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #222;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+/* Hover premium gradient + glow */
+.nav-links a:hover {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #fff !important;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  border-color: transparent;
+}
+
+/* Active / focus (optional highlight) */
+.nav-links a:focus,
+.nav-links a:active {
+  outline: none;
+  background: linear-gradient(90deg, var(--accent-2), var(--accent));
+  color: #fff;
+  box-shadow: 0 0 12px rgba(38,198,218,0.5);
+  transform: translateY(-1px) scale(1.02);
+}
+
+/* HOMSTEL Logo Box */
+#logo {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.08);  /* dark mode look */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--accent);
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+/* Light mode logo box */
+body:not(.dark) #logo {
+  background: rgba(0, 0, 0, 0.05);   /* soft grey box */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #0077c2;  /* nice blue */
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+/* Hover / active effect */
+#logo:hover {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #fff !important;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  border-color: transparent;
+}
+/* Dark mode navbar links spacing fix */
+body.dark .nav-links a {
+  color: #000000 !important;
+  font-weight: 700;
+  display: inline-block;   /* fix overlapping */
+  padding: 8px 12px;       /* proper padding inside boxes */
+  margin: 0 4px;           /* spacing between links */
+  white-space: nowrap;      /* prevent wrapping */
+  box-sizing: border-box;   /* ensure sizing is correct */
+}
+/* In your style.css file */
+#chat-widget {
+  position: fixed;
+  right: 18px;
+  bottom: 18px; /* Change this to a smaller value if needed */
+  z-index: 1400;
+}
+/* In your style.css file */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 360px; /* This is good for large screens */
+  gap: 18px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr; /* This will stack the columns on small screens, which is what you want */
+  }
+}
+
+/* Update the existing CSS for the chat panel */
+#chat-panel {
+  display: none;
+  position: fixed;
+  right: 18px;
+  bottom: 76px; /* This value positions the panel just above the toggle button */
+  width: 320px;
+  /* ... rest of the styles remain the same */
+}
+
+/* Ensure the chat toggle button is correctly positioned */
+#chat-toggle {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 1400;
+  /* ... rest of the styles remain the same */
+}
+
+
+/* In your style.css file */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 18px;
+  align-items: start;
+}
+
+/* Add or update this media query */
+@media (max-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr; /* This will stack the form and contact info vertically on small screens */
+  }
+}
+
+/* Update the .nav-inner class in your style.css file */
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap; /* Add this to prevent overlapping on smaller screens */
+  gap: 20px; /* Add this to increase the space between the logo and nav links */
+}
+
+/* Video section styling */
+.video-wrap {
+  max-width: 900px;
+  margin: 2rem auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.video-wrap video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.gallery-item img,
+.gallery-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* Logo styling */
+.logo {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 36px; /* logo size adjust yaha se */
+  width: auto;
+  margin-right: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 6px; /* thoda rounded look */
+}
+
+/* Hover effect on logo image */
+.logo-img:hover {
+  transform: scale(1.15) rotate(2deg);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+}
